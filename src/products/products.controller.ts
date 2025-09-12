@@ -1,5 +1,8 @@
-import { Body, Controller, Delete, Get, Inject, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Query } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
 
+import { PaginationDto } from 'src/common';
+import { PRODUCT_SERVICE } from 'src/config';
 
 
 
@@ -7,7 +10,7 @@ import { Body, Controller, Delete, Get, Inject, Param, Patch, Post } from '@nest
 export class ProductsController {
 
   constructor(
-    @Inject()
+    @Inject( PRODUCT_SERVICE ) private readonly productsClient: ClientProxy
   ) { }
 
   @Post()
@@ -16,13 +19,13 @@ export class ProductsController {
   }
 
   @Get()
-  findAllProducts() {
-    return 'Regresa varios productos';
+  findAllProducts( @Query() paginationDto: PaginationDto ) {
+    return this.productsClient.send( { cmd: 'find_all_products' }, { limit: paginationDto.limit, page: paginationDto.page } );
   }
 
   @Get( ':id' )
   findOne( @Param( 'id' ) id: string ) {
-    return 'Regresa el producto ' + id;
+    return this.productsClient.send( { cmd: 'find_one_product' }, { id } );
   }
 
   @Patch( ':id' )
