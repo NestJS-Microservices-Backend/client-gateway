@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Patch, Post } from '@nestjs/common';
 
 
 
@@ -6,7 +6,9 @@ import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/commo
 @Controller( 'products' )
 export class ProductsController {
 
-  constructor() { }
+  constructor(
+    @Inject()
+  ) { }
 
   @Post()
   createProduct() {
