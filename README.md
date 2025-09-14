@@ -6,7 +6,7 @@ This project is a client-facing gateway built with [NestJS](https://nestjs.com/)
 
 The Client Gateway is responsible for:
 - Authenticating and authorizing incoming requests.
-- Routing requests to the appropriate downstream microservices.
+- Routing requests to the appropriate downstream microservices (`Products`, `Orders`).
 - Aggregating and transforming data from multiple services.
 - Providing a single, consistent API for client applications.
 
@@ -40,11 +40,16 @@ This project uses environment variables for configuration. Create a `.env` file 
 cp .template.env .env
 ```
 
-Modify the `.env` file with your specific configuration. The following variables are available:
+Modify the `.env` file with your specific configuration. The following variables are required:
 
-| Variable | Description             | Default |
-| -------- | ----------------------- | ------- |
-| `PORT`   | The port the app runs on. | `3000`  |
+| Variable | Description | Default Value in `.template.env` |
+| :--- | :--- | :--- |
+| `PORT` | The port the app runs on. | `3000` |
+| `PRODUCTS_MICROSERVICE_HOST` | Host for the Products microservice. | `localhost` |
+| `PRODUCTS_MICROSERVICE_PORT` | Port for the Products microservice. | `3001` |
+| `ORDERS_MICROSERVICE_HOST` | Host for the Orders microservice. | `localhost` |
+| `ORDERS_MICROSERVICE_PORT` | Port for the Orders microservice. | `3002` |
+
 
 ## Running the Application
 
@@ -54,42 +59,49 @@ To run the application in development mode with file watching:
 npm run start:dev
 ```
 
-The application will be available at `http://localhost:3000/api`.
+The application will be available at `http://localhost:3000`.
+
+### API Endpoints
+
+The gateway exposes the following endpoints:
+
+-   **Products:** `/api/products`
+-   **Orders:** `/api/orders`
 
 ### Other Scripts
 
-- **Build for production:**
-  ```bash
-  npm run build
-  ```
+-   **Build for production:**
+    ```bash
+    npm run build
+    ```
 
-- **Run in production:**
-  ```bash
-  npm run start:prod
-  ```
+-   **Run in production:**
+    ```bash
+    npm run start:prod
+    ```
 
-- **Lint and format:**
-  ```bash
-  npm run lint
-  npm run format
-  ```
+-   **Lint and format:**
+    ```bash
+    npm run lint
+    npm run format
+    ```
 
 ## Running Tests
 
-- **Execute unit tests:**
-  ```bash
-  npm run test
-  ```
+-   **Execute unit tests:**
+    ```bash
+    npm run test
+    ```
 
-- **Execute end-to-end (e2e) tests:**
-  ```bash
-  npm run test:e2e
-  ```
+-   **Execute end-to-end (e2e) tests:**
+    ```bash
+    npm run test:e2e
+    ```
 
-- **Generate test coverage report:**
-  ```bash
-  npm run test:cov
-  ```
+-   **Generate test coverage report:**
+    ```bash
+    npm run test:cov
+    ```
 
 ## License
 

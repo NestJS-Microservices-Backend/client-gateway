@@ -9,6 +9,7 @@ import { PRODUCT_SERVICE } from 'src/config';
 
 @Controller( 'products' )
 export class ProductsController {
+  
   constructor(
     @Inject( PRODUCT_SERVICE ) private readonly productsClient: ClientProxy,
   ) { }
