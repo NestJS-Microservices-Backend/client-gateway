@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Param, ParseUUIDPipe, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, ParseUUIDPipe, Patch, Post, Query } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 
@@ -41,15 +41,22 @@ export class OrdersController {
   @Get( ':status' )
   async findAllByStatus( @Param() statusDto: StatusDto, @Query() paginationDto: PaginationDto ) {
     try {
-      return { statusDto, paginationDto };
-      // const order = await firstValueFrom(
-      //   this.ordersClient.send( 'findOneOrder', { id } )
-      // );
-
-      // return order;
+      return await this.ordersClient.send( 'findAllOrders', {
+        ...paginationDto,
+        status: statusDto.status
+      }
+      );
     } catch ( error ) {
       throw new RpcException( error );
     }
   }
 
+  @Patch( ':id' )
+  async hangeStatus( @Param( 'id', ParseUUIDPipe ) id: string, @Body() statusDto: StatusDto ) {
+    try {
+      return await this.ordersClient.send( 'changeOrderStatus', { id, status: statusDto.status } );
+    } catch ( error ) {
+      throw new RpcException( error );
+    }
+  }
 }

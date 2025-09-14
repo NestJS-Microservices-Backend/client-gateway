@@ -65,8 +65,19 @@ The application will be available at `http://localhost:3000`.
 
 The gateway exposes the following endpoints:
 
--   **Products:** `/api/products`
--   **Orders:** `/api/orders`
+#### Products
+- `GET /api/products`: Get a paginated list of products.
+- `GET /api/products/:id`: Get a single product by ID.
+- `POST /api/products`: Create a new product.
+- `PATCH /api/products/:id`: Update a product.
+- `DELETE /api/products/:id`: Delete a product.
+
+#### Orders
+- `GET /api/orders`: Get a paginated list of orders. Can be filtered by status.
+- `GET /api/orders/id/:id`: Get a single order by ID (UUID).
+- `GET /api/orders/:status`: Get a paginated list of orders filtered by status (`PENDING`, `DELIVERED`, `CANCELLED`).
+- `POST /api/orders`: Create a new order.
+- `PATCH /api/orders/:id`: Change the status of an order.
 
 ### Other Scripts
 
