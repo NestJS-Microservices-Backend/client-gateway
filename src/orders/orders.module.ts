@@ -4,6 +4,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { OrdersController } from './orders.controller';
 import { envs, ORDERS_SERVICE } from 'src/config';
 
+
 @Module( {
   controllers: [ OrdersController ],
   providers: [],
