@@ -2,6 +2,21 @@
 
 This project is a client-facing gateway built with [NestJS](https://nestjs.com/). It acts as the primary entry point for client applications interacting with the backend microservices.
 
+## Table of Contents
+
+- [Description](#description)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Environment Variables](#environment-variables)
+- [Running the Application](#running-the-application)
+  - [API Endpoints](#api-endpoints)
+- [Other Scripts](#other-scripts)
+- [Running Tests](#running-tests)
+- [Technologies Used](#technologies-used)
+- [License](#license)
+
 ## Description
 
 The Client Gateway is responsible for:
@@ -9,6 +24,30 @@ The Client Gateway is responsible for:
 - Routing requests to the appropriate downstream microservices (`Products`, `Orders`).
 - Aggregating and transforming data from multiple services.
 - Providing a single, consistent API for client applications.
+
+## Project Structure
+
+```
+.
+├── src
+│   ├── common
+│   │   ├── dto
+│   │   └── exceptions
+│   ├── config
+│   ├── orders
+│   │   ├── dto
+│   │   └── enum
+│   └── products
+│       └── dto
+├── .gitignore
+├── .prettierrc
+├── .template.env
+├── eslint.config.mjs
+├── nest-cli.json
+├── package.json
+├── README.md
+└── tsconfig.json
+```
 
 ## Getting Started
 
@@ -32,7 +71,7 @@ The Client Gateway is responsible for:
     npm install
     ```
 
-### Environment Variables
+## Environment Variables
 
 This project uses environment variables for configuration. Create a `.env` file in the root of the project by copying the template:
 
@@ -79,7 +118,7 @@ The gateway exposes the following endpoints:
 - `POST /api/orders`: Create a new order.
 - `PATCH /api/orders/:id`: Change the status of an order.
 
-### Other Scripts
+## Other Scripts
 
 -   **Build for production:**
     ```bash
@@ -113,6 +152,15 @@ The gateway exposes the following endpoints:
     ```bash
     npm run test:cov
     ```
+
+## Technologies Used
+
+- [NestJS](https://nestjs.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Express](https://expressjs.com/)
+- [Jest](https://jestjs.io/) for testing
+- [ESLint](https://eslint.org/) for linting
+- [Prettier](https://prettier.io/) for code formatting
 
 ## License
 
