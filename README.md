@@ -19,31 +19,38 @@ This project is a client-facing gateway built with [NestJS](https://nestjs.com/)
 
 ## Description
 
-The Client Gateway is responsible for:
-- Authenticating and authorizing incoming HTTP requests.
-- Forwarding requests to the appropriate downstream microservices (`Products`, `Orders`) through a NATS message broker.
-- Aggregating and transforming data from multiple services.
-- Providing a single, consistent API for client applications.
+The Client Gateway is the main entry point for all client-side requests. It serves as an API Gateway that sits between the client applications and a set of backend microservices.
+
+Its primary responsibilities are:
+- **Request Handling:** Receiving HTTP requests from clients.
+- **Service Discovery:** Routing incoming requests to the appropriate downstream microservice (e.g., Products, Orders).
+- **Protocol Translation:** Communicating with microservices over a message broker (NATS).
+- **Error Handling:** Providing a centralized exception filter for microservice responses.
+- **Validation:** Enforcing request data validation using global pipes.
+
+This architecture decouples the client from the backend services, allowing for greater flexibility and scalability.
 
 ## Project Structure
 
 ```
 .
 ├── src
-│   ├── common
+│   ├── common          # Shared modules, DTOs, and exception filters
 │   │   ├── dto
 │   │   └── exceptions
-│   ├── config
-│   ├── orders
+│   ├── config          # Environment variable and service configuration
+│   ├── orders          # Orders module (controller, DTOs)
 │   │   ├── dto
 │   │   └── enum
-│   ├── products
+│   ├── products        # Products module (controller, DTOs)
 │   │   └── dto
-│   └── transports
+│   └── transports      # NATS transport client module
 │       └── nats.module.ts
+├── .dockerignore
 ├── .gitignore
 ├── .prettierrc
-├── .template.env
+├── .template.env       # Template for environment variables
+├── Dockerfile
 ├── eslint.config.mjs
 ├── nest-cli.json
 ├── package.json
@@ -98,7 +105,7 @@ To run the application in development mode with file watching:
 npm run start:dev
 ```
 
-The application will be available at `http://localhost:3000`.
+The application will be available at `http://localhost:3000`. All endpoints are prefixed with `/api`.
 
 ### API Endpoints
 
