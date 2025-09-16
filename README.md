@@ -1,6 +1,6 @@
 # Client Gateway
 
-This project is a client-facing gateway built with [NestJS](https://nestjs.com/). It acts as the primary entry point for client applications interacting with the backend microservices.
+This project is a client-facing gateway built with [NestJS](https://nestjs.com/). It acts as the primary entry point for client applications, communicating with backend microservices via a [NATS](https://nats.io/) message broker.
 
 ## Table of Contents
 
@@ -20,8 +20,8 @@ This project is a client-facing gateway built with [NestJS](https://nestjs.com/)
 ## Description
 
 The Client Gateway is responsible for:
-- Authenticating and authorizing incoming requests.
-- Routing requests to the appropriate downstream microservices (`Products`, `Orders`).
+- Authenticating and authorizing incoming HTTP requests.
+- Forwarding requests to the appropriate downstream microservices (`Products`, `Orders`) through a NATS message broker.
 - Aggregating and transforming data from multiple services.
 - Providing a single, consistent API for client applications.
 
@@ -37,8 +37,10 @@ The Client Gateway is responsible for:
 │   ├── orders
 │   │   ├── dto
 │   │   └── enum
-│   └── products
-│       └── dto
+│   ├── products
+│   │   └── dto
+│   └── transports
+│       └── nats.module.ts
 ├── .gitignore
 ├── .prettierrc
 ├── .template.env
@@ -55,6 +57,7 @@ The Client Gateway is responsible for:
 
 - [Node.js](https://nodejs.org/en/) (v18 or higher recommended)
 - [npm](https://www.npmjs.com/)
+- A running NATS server instance.
 
 ### Installation
 
@@ -81,13 +84,10 @@ cp .template.env .env
 
 Modify the `.env` file with your specific configuration. The following variables are required:
 
-| Variable | Description | Default Value in `.template.env` |
-| :--- | :--- | :--- |
-| `PORT` | The port the app runs on. | `3000` |
-| `PRODUCTS_MICROSERVICE_HOST` | Host for the Products microservice. | `localhost` |
-| `PRODUCTS_MICROSERVICE_PORT` | Port for the Products microservice. | `3001` |
-| `ORDERS_MICROSERVICE_HOST` | Host for the Orders microservice. | `localhost` |
-| `ORDERS_MICROSERVICE_PORT` | Port for the Orders microservice. | `3002` |
+| Variable      | Description                       | Default Value in `.template.env`     |
+| :------------ | :-------------------------------- | :----------------------------------- |
+| `PORT`        | The port the app runs on.         | `3000`                               |
+| `NATS_SERVERS`| Comma-separated list of NATS server URLs. | `"nats://localhost:4222"` |
 
 
 ## Running the Application
@@ -157,6 +157,7 @@ The gateway exposes the following endpoints:
 
 - [NestJS](https://nestjs.com/)
 - [TypeScript](https://www.typescriptlang.org/)
+- [NATS](https://nats.io/) for microservice communication
 - [Express](https://expressjs.com/)
 - [Jest](https://jestjs.io/) for testing
 - [ESLint](https://eslint.org/) for linting
