@@ -12,9 +12,11 @@ This project is a client-facing gateway built with [NestJS](https://nestjs.com/)
 - [Environment Variables](#environment-variables)
 - [Running the Application](#running-the-application)
   - [API Endpoints](#api-endpoints)
+- [Docker Support](#docker-support)
 - [Other Scripts](#other-scripts)
 - [Running Tests](#running-tests)
 - [Technologies Used](#technologies-used)
+- [Contributing](#contributing)
 - [License](#license)
 
 ## Description
@@ -64,6 +66,7 @@ This architecture decouples the client from the backend services, allowing for g
 
 - [Node.js](https://nodejs.org/en/) (v18 or higher recommended)
 - [npm](https://www.npmjs.com/)
+- [Docker](https://www.docker.com/) (for containerized setup)
 - A running NATS server instance.
 
 ### Installation
@@ -94,7 +97,7 @@ Modify the `.env` file with your specific configuration. The following variables
 | Variable      | Description                       | Default Value in `.template.env`     |
 | :------------ | :-------------------------------- | :----------------------------------- |
 | `PORT`        | The port the app runs on.         | `3000`                               |
-| `NATS_SERVERS`| Comma-separated list of NATS server URLs. | `"nats://localhost:4222"` |
+| `NATS_SERVERS`| Comma-separated list of NATS server URLs. | `["nats://localhost:4222"]` |
 
 
 ## Running the Application
@@ -124,6 +127,22 @@ The gateway exposes the following endpoints:
 - `GET /api/orders/id/:id`: Get a single order by ID (UUID).
 - `GET /api/orders/:status`: Get a paginated list of orders filtered by status (`PENDING`, `DELIVERED`, `CANCELLED`).
 - `PATCH /api/orders/:id`: Change the status of an order.
+
+## Docker Support
+
+This application includes a `Dockerfile` for containerization.
+
+1.  **Build the Docker image:**
+    ```bash
+    docker build -t client-gateway .
+    ```
+
+2.  **Run the Docker container:**
+    Make sure you have a `.env` file created, as the container uses it.
+    ```bash
+    docker run --env-file .env -p 3000:3000 client-gateway
+    ```
+    *The `-p 3000:3000` flag maps the container's port 3000 to your host machine's port 3000.*
 
 ## Other Scripts
 
@@ -165,10 +184,21 @@ The gateway exposes the following endpoints:
 - [NestJS](https://nestjs.com/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [NATS](https://nats.io/) for microservice communication
+- [Docker](https://www.docker.com/)
 - [Express](https://expressjs.com/)
 - [Jest](https://jestjs.io/) for testing
 - [ESLint](https://eslint.org/) for linting
 - [Prettier](https://prettier.io/) for code formatting
+
+## Contributing
+
+Contributions are welcome! Please follow these steps:
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/your-feature-name`).
+3. Make your changes.
+4. Commit your changes (`git commit -m 'feat: Add some feature'`).
+5. Push to the branch (`git push origin feature/your-feature-name`).
+6. Open a pull request.
 
 ## License
 

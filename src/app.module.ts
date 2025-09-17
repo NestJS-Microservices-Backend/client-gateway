@@ -7,7 +7,12 @@ import { AuthModule } from './auth/auth.module';
 
 
 @Module( {
-  imports: [ProductsModule, OrdersModule, NatsModule, AuthModule],
+  imports: [
+    ProductsModule,
+    OrdersModule,
+    NatsModule,
+    AuthModule
+  ],
   controllers: [],
   providers: [],
 } )

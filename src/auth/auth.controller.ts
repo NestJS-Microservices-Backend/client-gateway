@@ -16,13 +16,13 @@ export class AuthController {
 
   @Post( 'register' )
   registerUser( @Body() registerUserDto: RegisterUserDto ) {
-    return this.client.send( 'auth.register.user', {} );
+    return this.client.send( 'auth.register.user', registerUserDto );
   }
 
 
   @Post( 'login' )
   loginUser( @Body() loginUserDto: LoginUserDto ) {
-    return this.client.send( 'auth.login.user', {} );
+    return this.client.send( 'auth.login.user', loginUserDto );
   }
 
 
